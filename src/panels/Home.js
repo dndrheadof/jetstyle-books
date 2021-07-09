@@ -96,6 +96,7 @@ const Home = () => {
 
   const [dialogOpened, setDialogOpened] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
+  const [deleteDialogOpened, setDeleteDialogOpened] = useState(false);
 
   const [bookTitle, setBookTitle] = useState("");
   const [bookDescription, setBookDescription] = useState("");
@@ -169,10 +170,20 @@ const Home = () => {
     closeCreateDialog();
   };
 
+  const openDeleteDialog = () => {
+    setDeleteDialogOpened(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpened(false);
+    setBookKey(null);
+  };
+
   const deleteBook = () => {
     setBooks((books) => books.filter((book, i) => i !== bookKey));
     setAnchorEl(null);
     openSnackbar("Книга удалена!");
+    closeDeleteDialog();
   };
 
   const onChange = (event) => {
@@ -256,7 +267,9 @@ const Home = () => {
                           <MenuItem onClick={openEditDialog}>
                             Редактировать
                           </MenuItem>
-                          <MenuItem onClick={deleteBook}>Удалить</MenuItem>
+                          <MenuItem onClick={openDeleteDialog}>
+                            Удалить
+                          </MenuItem>
                         </Menu>
                       </div>
                     }
@@ -315,6 +328,23 @@ const Home = () => {
             </Button>
             <Button onClick={saveBook} color="primary">
               Сохранить
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={deleteDialogOpened}
+          onClose={closeDeleteDialog}
+          color="primary"
+          variant="outlined"
+        >
+          <DialogTitle>Удалить книгу?</DialogTitle>
+          <DialogActions>
+            <Button onClick={closeDeleteDialog} color="primary">
+              Нет
+            </Button>
+            <Button onClick={deleteBook} color="primary" autoFocus>
+              Да
             </Button>
           </DialogActions>
         </Dialog>
