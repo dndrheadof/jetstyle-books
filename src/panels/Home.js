@@ -20,6 +20,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import { Alert } from "../components/Alert";
 import { AddOutlined, MoreVert } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 
@@ -101,6 +102,7 @@ const Home = () => {
   const [bookAuthor, setBookAuthor] = useState("");
 
   const [snackbarText, setSnackbarText] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [snackbarOpened, setSnackbarOpened] = useState(false);
   const classes = useStyles();
 
@@ -189,9 +191,10 @@ const Home = () => {
     }
   };
 
-  const openSnackbar = (text) => {
+  const openSnackbar = (text, severity = "success") => {
     setSnackbarOpened(true);
     setSnackbarText(text);
+    setSnackbarSeverity(severity);
   };
 
   const closeSnackbar = () => {
@@ -323,8 +326,11 @@ const Home = () => {
           open={snackbarOpened}
           autoHideDuration={5000}
           onClose={closeSnackbar}
-          message={snackbarText}
-        />
+        >
+          <Alert onClose={closeSnackbar} severity={snackbarSeverity}>
+            {snackbarText}
+          </Alert>
+        </Snackbar>
       </Container>
 
       <Fab className={classes.fab} color="primary" onClick={openCreateDialog}>
