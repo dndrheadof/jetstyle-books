@@ -1,3 +1,5 @@
+# При первом запуске приложения и при полном сбросе localstorage хранилище пополняется несколькими записями (для удобства)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
