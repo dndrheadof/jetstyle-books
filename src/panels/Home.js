@@ -151,13 +151,17 @@ const Home = () => {
     if (!book) {
       setBooks([
         ...books,
-        { title: bookTitle, description: bookDescription, author: bookAuthor },
+        {
+          title: bookTitle || "Без названия",
+          author: bookAuthor || "Без автора",
+          description: bookDescription || "У данной книги нет описания",
+        },
       ]);
       openSnackbar("Книга добавлена!");
     } else {
-      book.title = bookTitle;
-      book.author = bookAuthor;
-      book.description = bookDescription;
+      book.title = bookTitle || "Без названия";
+      book.author = bookAuthor || "Без автора";
+      book.description = bookDescription || "У данной книги нет описания";
       const updatedBooks = [...books];
 
       setBooks(updatedBooks);
