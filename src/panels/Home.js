@@ -105,6 +105,8 @@ const Home = () => {
   const [snackbarText, setSnackbarText] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [snackbarOpened, setSnackbarOpened] = useState(false);
+
+  const [xs, setXS] = useState(6);
   const classes = useStyles();
 
   const handleMenuOpen = (event) => {
@@ -218,7 +220,14 @@ const Home = () => {
     setSnackbarOpened(false);
   };
 
+  const handleResize = () => {
+    const width = window.innerWidth;
+    const columnSize = (width >= 750 && 6) || 12;
+    setXS(columnSize);
+  };
+
   useEffect(() => {
+    window.addEventListener("resize", handleResize);
     const localBooks = localStorage.getItem("books");
     if (localBooks === null) {
       localStorage.setItem("books", JSON.stringify(defaultBooks));
@@ -243,7 +252,7 @@ const Home = () => {
         <Grid container spacing={3}>
           {books.map((book, i) => {
             return (
-              <Grid item xs={6} key={i}>
+              <Grid item xs={xs} key={i}>
                 <Card className={classes.card}>
                   <CardHeader
                     action={
