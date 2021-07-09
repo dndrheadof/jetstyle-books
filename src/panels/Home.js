@@ -130,6 +130,7 @@ const Home = () => {
 
   const closeCreateDialog = () => {
     setDialogOpened(false);
+    setBookKey(null);
   };
 
   const openEditDialog = () => {
