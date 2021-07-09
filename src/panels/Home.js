@@ -184,6 +184,8 @@ const Home = () => {
       case "author":
         setBookAuthor(value);
         break;
+      default:
+        break;
     }
   };
 
