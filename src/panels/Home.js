@@ -172,6 +172,7 @@ const Home = () => {
 
   const openDeleteDialog = () => {
     setDeleteDialogOpened(true);
+    setAnchorEl(null);
   };
 
   const closeDeleteDialog = () => {
