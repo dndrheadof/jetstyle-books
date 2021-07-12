@@ -23,6 +23,10 @@ import {
 import { Alert } from "../components/Alert";
 import { AddOutlined, MoreVert } from "@material-ui/icons";
 import { useEffect, useState } from "react";
+import { CustomSnackbar } from "../components/CustomSnackbar";
+import { DeleteBookDialog } from "../components/Dialogs/DeleteBookDialog";
+import { CreateBookDialog } from "../components/Dialogs/CreateBookDialog";
+import { Book } from "../components/Book";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -125,10 +129,10 @@ const Home = () => {
   };
 
   const cancelCreation = () => {
+    closeCreateDialog();
     setBookTitle("");
     setBookDescription("");
     setBookAuthor("");
-    closeCreateDialog();
   };
 
   const closeCreateDialog = () => {
@@ -250,132 +254,45 @@ const Home = () => {
 
       <Container className={classes.root}>
         <Grid container spacing={3}>
-          {books.map((book, i) => {
-            return (
-              <Grid item xs={xs} key={i}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    action={
-                      <div>
-                        <IconButton
-                          aria-label="settings"
-                          onClick={handleMenuOpen}
-                          data-book={i}
-                        >
-                          <MoreVert />
-                        </IconButton>
-
-                        <Menu
-                          open={Boolean(anchorEl) && bookKey === i}
-                          anchorEl={anchorEl}
-                          anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                          }}
-                          transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                          }}
-                          onClose={handleMenuClose}
-                        >
-                          <MenuItem onClick={openEditDialog}>
-                            Редактировать
-                          </MenuItem>
-                          <MenuItem onClick={openDeleteDialog}>
-                            Удалить
-                          </MenuItem>
-                        </Menu>
-                      </div>
-                    }
-                    title={book.title}
-                    subheader={book.author}
-                  />
-                  <CardContent>
-                    <Typography variant="body2" component="p">
-                      {book.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
-          })}
+          {books.map((book, i) => (
+            <Book
+              book={book}
+              i={i}
+              xs={xs}
+              anchorEl={anchorEl}
+              bookKey={bookKey}
+              handleMenuClose={handleMenuClose}
+              handleMenuOpen={handleMenuOpen}
+              openDeleteDialog={openDeleteDialog}
+              openEditDialog={openEditDialog}
+            />
+          ))}
         </Grid>
 
-        <Dialog
-          open={dialogOpened}
-          onClose={cancelCreation}
-          color="primary"
-          variant="outlined"
-        >
-          <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Название книги"
-              name="title"
-              fullWidth
-              value={bookTitle}
-              onChange={onChange}
-            />
-            <TextField
-              margin="dense"
-              label="Автор"
-              name="author"
-              fullWidth
-              value={bookAuthor}
-              onChange={onChange}
-            />
-            <TextField
-              margin="dense"
-              label="Описание книги"
-              name="description"
-              fullWidth
-              multiline
-              value={bookDescription}
-              onChange={onChange}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={cancelCreation} color="primary">
-              Отмена
-            </Button>
-            <Button onClick={saveBook} color="primary">
-              Сохранить
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <CreateBookDialog
+          onChange={onChange}
+          bookAuthor={bookAuthor}
+          dialogTitle={dialogTitle}
+          bookDescription={bookDescription}
+          bookTitle={bookTitle}
+          cancelCreation={cancelCreation}
+          dialogOpened={dialogOpened}
+          saveBook={saveBook}
+        />
 
-        <Dialog
-          open={deleteDialogOpened}
-          onClose={closeDeleteDialog}
-          color="primary"
-          variant="outlined"
-        >
-          <DialogTitle>Удалить книгу?</DialogTitle>
-          <DialogActions>
-            <Button onClick={closeDeleteDialog} color="primary">
-              Нет
-            </Button>
-            <Button onClick={deleteBook} color="primary" autoFocus>
-              Да
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <DeleteBookDialog
+          closeDeleteDialog={closeDeleteDialog}
+          deleteBook={deleteBook}
+          deleteDialogOpened={deleteDialogOpened}
+        />
 
-        <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          open={snackbarOpened}
-          autoHideDuration={5000}
-          onClose={closeSnackbar}
+        <CustomSnackbar
+          closeSnackbar={closeSnackbar}
+          snackbarOpened={snackbarOpened}
+          snackbarSeverity={snackbarSeverity}
         >
-          <Alert onClose={closeSnackbar} severity={snackbarSeverity}>
-            {snackbarText}
-          </Alert>
-        </Snackbar>
+          {snackbarText}
+        </CustomSnackbar>
       </Container>
 
       <Fab className={classes.fab} color="primary" onClick={openCreateDialog}>
