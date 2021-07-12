@@ -43,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     maxWidth: 145,
   },
-  card: {
-    height: "100%",
-  },
 }));
 
 const defaultBooks = [

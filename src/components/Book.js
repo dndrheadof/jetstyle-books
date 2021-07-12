@@ -12,20 +12,6 @@ import {
 import { MoreVert } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
-  fab: {
-    position: "fixed",
-    bottom: theme.spacing(5),
-    right: theme.spacing(5),
-  },
-  root: {
-    flexGrow: 1,
-    padding: 24,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    maxWidth: 145,
-  },
   card: {
     height: "100%",
   },
