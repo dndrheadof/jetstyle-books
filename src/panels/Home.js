@@ -190,6 +190,7 @@ const Home = () => {
         <Grid container spacing={3}>
           {books.map((book, i) => (
             <Book
+              key={i}
               book={book}
               i={i}
               xs={xs}
