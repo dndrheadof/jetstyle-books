@@ -38,11 +38,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: 24,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    maxWidth: 145,
-  },
 }));
 
 const defaultBooks = [
